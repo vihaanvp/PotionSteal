@@ -1,0 +1,36 @@
+# IntelliJ IDEA files
+.idea/
+*.iml
+
+# Maven target and build
+/target/
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Java
+*.class
+
+# Plugin config and generated data
+players.yml
+*.yml
+*.db
+
+# Ignore compiled jars
+*.jar
+
+# Ignore backup files
+*.bak
+*.swp
+
+# Ignore crash reports
+crash-reports/
+*.txt
+
+# Ignore environment files
+.env
+
+# Ignore node_modules if any
+node_modules/
