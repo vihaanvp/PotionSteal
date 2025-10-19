@@ -1,0 +1,79 @@
+# ================= PotionSteal Configuration =================
+# Change all options below to customize plugin behavior!
+
+pluginDisplayName: "PotionSteal"
+
+ban:
+  enabled: true
+  threshold: -10
+  message: "&c{player} has been banned for reaching {balance} debuffs!"
+  broadcast: true
+  sound: "ENTITY_ENDER_DRAGON_DEATH" # Sound played on ban
+  warningThreshold: -8
+  warningMessage: "&e{player} is close to being banned! ({balance} debuffs)"
+
+balance:
+  default: 0
+  min: -10
+  max: 10
+
+effects:
+  buffs:
+    - SPEED:1
+    - STRENGTH:1
+    - REGENERATION:1
+    - ABSORPTION:1
+    - RESISTANCE:1
+    - SPEED:2
+    - STRENGTH:2
+    - REGENERATION:2
+    - ABSORPTION:2
+    - RESISTANCE:2
+  debuffs:
+    - SLOW:1
+    - WEAKNESS:1
+    - SLOW:2
+    - WEAKNESS:2
+    - HUNGER:1
+    - UNLUCK:1
+    - WEAKNESS:3
+    - HUNGER:2
+    - UNLUCK:2
+    - WEAKNESS:4
+
+elixir:
+  name: "&bElixir of Renewal"
+  material: POTION
+  lore:
+    - "&7A mystical elixir said to reverse the effects of fate."
+    - "&7Right-click to shift your potion destiny by one."
+  recipe:
+    enabled: true
+    shape:
+      - " E "
+      - "BPB"
+      - " G "
+    ingredients:
+      E: ENDER_EYE
+      B: BLAZE_POWDER
+      P: POTION
+      G: GHAST_TEAR
+
+tablist:
+  enabled: true
+  format: "[{balance}] {player}"
+
+scoreboard:
+  enabled: true
+  title: "&aPotionSteal Leaderboard"
+  lineFormat: "&e{rank}. &b{player} &7- &a{balance}"
+  showOffline: true
+
+messages:
+  balanceChanged: "&6Your potion balance is now: &e{balance}"
+  killedPlayer: "&aYou killed {victim}! Your balance is now &e{balance}"
+  died: "&cYou died! Your balance is now &e{balance}"
+  usedElixir: "&bElixir used! Your balance is now &e{balance}"
+  immunityOn: "&a{player} is now immune to ban."
+  immunityOff: "&c{player} is no longer immune to ban."
+  reload: "&aPotionSteal config reloaded!"

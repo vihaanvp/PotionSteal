@@ -13,11 +13,6 @@ Thumbs.db
 # Java
 *.class
 
-# Plugin config and generated data
-players.yml
-*.yml
-*.db
-
 # Ignore compiled jars
 *.jar
 
@@ -25,12 +20,12 @@ players.yml
 *.bak
 *.swp
 
-# Ignore crash reports
+# Crash reports and temp files
 crash-reports/
 *.txt
 
-# Ignore environment files
+# Environment files
 .env
 
-# Ignore node_modules if any
+# Node modules (if any)
 node_modules/

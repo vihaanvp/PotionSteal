@@ -1,0 +1,20 @@
+name: PotionSteal
+main: me.vihaanvp.potionsteal.PotionSteal
+version: 1.0.0
+author: vihaanvp
+api-version: 1.21
+description: Highly customizable lifesteal-like plugin using potion buffs/debuffs, by vihaanvp
+
+commands:
+  potionsteal:
+    description: PotionSteal plugin commands
+    usage: /potionsteal <balance|setbalance|giveelixir|immunity|reload|revive>
+    aliases: [ps]
+
+permissions:
+  potionsteal.admin:
+    description: Allows use of admin commands (setbalance, giveelixir, immunity, reload, revive)
+    default: op
+  potionsteal.balance:
+    description: Allows checking balance of any player
+    default: true
