@@ -2,6 +2,7 @@ package me.vihaanvp.potionsteal.item;
 
 import me.vihaanvp.potionsteal.PotionSteal;
 import org.bukkit.Bukkit;
+import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -9,10 +10,8 @@ import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionType;
 import org.bukkit.ChatColor;
-import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class ElixirManager {
     private final PotionSteal plugin;
@@ -21,21 +20,28 @@ public class ElixirManager {
         this.plugin = plugin;
     }
 
+    /**
+     * Create the custom Elixir item. This is used for both the command and as the result of the crafting recipe.
+     */
     public ItemStack createElixirItem() {
-        ItemStack item = new ItemStack(Material.valueOf(plugin.getConfig().getString("elixir.material", "POTION")));
-        ItemMeta meta = item.getItemMeta();
-        if (meta instanceof PotionMeta potionMeta) {
-            potionMeta.setBasePotionType(PotionType.MUNDANE);
-        }
-        String name = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("elixir.name", "Elixir of Renewal"));
-        meta.setDisplayName(name);
-        List<String> lore = plugin.getConfig().getStringList("elixir.lore").stream()
-                .map(s -> ChatColor.translateAlternateColorCodes('&', s)).collect(Collectors.toList());
-        meta.setLore(lore);
+        ItemStack item = new ItemStack(Material.POTION);
+        PotionMeta meta = (PotionMeta) item.getItemMeta();
+        // Set potion base and color
+        meta.setBasePotionType(PotionType.MUNDANE);
+        meta.setColor(Color.FUCHSIA); // Custom color for distinction
+        meta.setDisplayName(ChatColor.RESET + "" + ChatColor.LIGHT_PURPLE + "Elixir of Renewal"); // Non-italic name
+        meta.setLore(List.of(
+                ChatColor.AQUA + "Use to restore power!",
+                ChatColor.YELLOW + "Special elixir for PotionSteal"
+        ));
         item.setItemMeta(meta);
         return item;
     }
 
+    /**
+     * Register the elixir crafting recipe.
+     * The result is always the custom elixir from createElixirItem().
+     */
     public void registerElixirRecipe() {
         ItemStack elixir = createElixirItem();
         NamespacedKey key = new NamespacedKey(plugin, "elixir_of_renewal");

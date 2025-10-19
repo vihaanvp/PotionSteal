@@ -5,6 +5,7 @@ import me.vihaanvp.potionsteal.data.PlayerDataManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -12,11 +13,11 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.*;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
-import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 
-import java.util.*;
+import java.util.List;
 import java.util.stream.Collectors;
+import java.util.UUID;
 
 public class ReviveBookManager implements Listener {
     private final PotionSteal plugin;
@@ -101,10 +102,8 @@ public class ReviveBookManager implements Listener {
             head.setItemMeta(skullMeta);
             gui.setItem(slot++, head);
         }
-        // Track which player used which book (for consumption on click)
         bookUsed.setAmount(1); // Only allow single-use per click
         player.openInventory(gui);
-        // Optionally, store bookUsed in a map if you want to support stacking, or just remove from hand on click
     }
 
     @EventHandler

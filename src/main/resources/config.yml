@@ -1,21 +1,11 @@
-# Plugin toggle (add if not present)
 enabled: true
 
-# Plugin display name
+# The display name for your plugin in logs and messages
 pluginDisplayName: "PotionSteal"
 
 balance:
-  default: 0   # Default starting balance for new players
-
-elixir:
-  material: "POTION"   # Material for the elixir item
-  name: "Elixir of Renewal"   # Custom name for elixir
-  lore:                     # Lore lines for elixir
-    - "Use to restore power!"
-    - "Special potion for PotionSteal"
+  default: 0
 
 tablist:
-  enabled: true   # Toggle tablist formatting
-  format: "[{balance}] {player}"  # Format string for tablist entries
-
-# There may be other config options and defaults elsewhere in your code or added in the future.
+  enabled: true
+  format: "[{balance}] {player}"\
