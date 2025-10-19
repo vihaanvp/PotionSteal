@@ -29,8 +29,13 @@ public class PotionSteal extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        instance = this;
         saveDefaultConfig();
+        if (!getConfig().getBoolean("enabled", true)) {
+            getLogger().warning("PotionSteal is disabled in config.yml. Plugin will not load.");
+            getServer().getPluginManager().disablePlugin(this);
+            return;
+        }
+        instance = this;
         pluginDisplayName = getConfig().getString("pluginDisplayName", "PotionSteal");
 
         // Initialize managers
