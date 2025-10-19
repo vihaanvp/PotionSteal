@@ -1,10 +1,10 @@
 package me.vihaanvp.potionsteal;
 
-import me.vihaanvp.potionsteal.command.PotionStealCommand;
-import me.vihaanvp.potionsteal.command.PotionStealTabCompleter;
+import me.vihaanvp.potionsteal.command.CommandManager;
 import me.vihaanvp.potionsteal.data.PlayerDataManager;
 import me.vihaanvp.potionsteal.effect.PotionEffectManager;
 import me.vihaanvp.potionsteal.item.ElixirManager;
+import me.vihaanvp.potionsteal.item.ReviveBookManager;
 import me.vihaanvp.potionsteal.listener.PlayerDeathListener;
 import me.vihaanvp.potionsteal.listener.PlayerJoinListener;
 import me.vihaanvp.potionsteal.listener.PlayerRespawnListener;
@@ -23,6 +23,7 @@ public class PotionSteal extends JavaPlugin {
     private ElixirManager elixirManager;
     private TabListManager tabListManager;
     private ScoreboardManager scoreboardManager;
+    private ReviveBookManager reviveBookManager;
 
     public static PotionSteal getInstance() { return instance; }
 
@@ -32,27 +33,29 @@ public class PotionSteal extends JavaPlugin {
         saveDefaultConfig();
         pluginDisplayName = getConfig().getString("pluginDisplayName", "PotionSteal");
 
+        // Initialize managers
         dataManager = new PlayerDataManager(this);
         effectManager = new PotionEffectManager(this, dataManager);
         elixirManager = new ElixirManager(this);
         tabListManager = new TabListManager(this, dataManager);
         scoreboardManager = new ScoreboardManager(this, dataManager);
+        reviveBookManager = new ReviveBookManager(this, dataManager, elixirManager);
 
         // Register Listeners
         getServer().getPluginManager().registerEvents(new PlayerDeathListener(this, dataManager, effectManager), this);
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(this, effectManager, dataManager), this);
         getServer().getPluginManager().registerEvents(new PlayerRespawnListener(this, effectManager, dataManager), this);
         getServer().getPluginManager().registerEvents(new ElixirUseListener(this, dataManager, effectManager, elixirManager), this);
+        getServer().getPluginManager().registerEvents(reviveBookManager, this);
 
-        // Register Command Executor and Tab Completer for /potionsteal
-        getCommand("potionsteal").setExecutor(
-                new PotionStealCommand(this, dataManager, effectManager, elixirManager)
-        );
-        getCommand("potionsteal").setTabCompleter(
-                new PotionStealTabCompleter()
-        );
+        // Register commands
+        CommandManager cmdManager = new CommandManager(this);
+        getCommand("potionsteal").setExecutor(cmdManager);
+        getCommand("potionsteal").setTabCompleter(cmdManager);
 
+        // Register custom recipes
         elixirManager.registerElixirRecipe();
+        reviveBookManager.registerReviveBookRecipe();
 
         // Tab list and scoreboard updater (every 10 seconds)
         Bukkit.getScheduler().runTaskTimer(this, () -> {
@@ -76,16 +79,15 @@ public class PotionSteal extends JavaPlugin {
     }
 
     public String getPluginDisplayName() { return pluginDisplayName; }
-
     public void reloadPluginConfig() {
         reloadConfig();
         pluginDisplayName = getConfig().getString("pluginDisplayName", "PotionSteal");
         dataManager.reload();
     }
-
     public PlayerDataManager getDataManager() { return dataManager; }
     public PotionEffectManager getEffectManager() { return effectManager; }
     public ElixirManager getElixirManager() { return elixirManager; }
     public TabListManager getTabListManager() { return tabListManager; }
     public ScoreboardManager getScoreboardManager() { return scoreboardManager; }
+    public ReviveBookManager getReviveBookManager() { return reviveBookManager; }
 }
